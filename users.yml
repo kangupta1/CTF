@@ -6,6 +6,7 @@
     - name: Add users
       ansible.builtin.user:
         name: "{{ item }}"
+        password: '@#FD12'
         state: present
       loop:
         - Annabelle
