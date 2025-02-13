@@ -1,6 +1,7 @@
 ---
 - name: Create users
   hosts: all
+  become: true
   tasks:
     - name: Add users
       ansible.builtin.user:
