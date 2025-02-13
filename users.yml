@@ -1,0 +1,69 @@
+---
+- name: Create users
+  hosts: all
+  tasks:
+    - name: Add users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - Annabelle
+        - Bob
+        - Carl
+        - Dyson
+        - Evert
+        - Frank
+        - Gerry
+        - Harold
+        - Isabella
+        - Jameson
+    - name: Add users to teams
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: Sales
+        append: true
+      loop:
+        - Annabelle
+        - Bob
+        - Carl
+    - name: Add users to teams
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: Support
+        append: true
+      loop:
+        - Dyson
+        - Evert
+        - Frank
+    - name: Add users to teams
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: Services
+        append: true
+      loop:
+        - Gerry
+        - Harold
+    - name: Add users to teams
+      ansible.builtin.user:
+        name: "{{ item }}"
+        groups: IT
+        append: true
+      loop:
+        - Isabella
+        - Jameson
+    - name: Set authorized key for user ubuntu copying it from current user
+      ansible.posix.authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_ed25519.pub') }}"
+      loop:
+        - Annabelle
+        - Bob
+        - Carl
+        - Dyson
+        - Evert
+        - Frank
+        - Gerry
+        - Harold
+        - Isabella
+        - Jameson
